@@ -20,15 +20,7 @@ import {
   FieldLabel,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-
-const loginSchema = z.object({
-  username: z.string().nonempty("Your username is required"),
-  password: z
-    .string()
-    .nonempty("Your password is required")
-    .min(8, "Password must be at least 8 characters")
-    .max(64, "Password must be at most 64 characters"),
-});
+import { loginSchema } from "./schema";
 
 type LoginValues = z.infer<typeof loginSchema>;
 
@@ -46,11 +38,11 @@ export default function LoginForm() {
   return (
     <Card className="w-full max-w-md">
       <CardHeader className="gap-2">
-        <CardTitle className="text-3xl font-bold text-slate-900">
+        <CardTitle className="text-3xl font-inter font-bold mb-6 text-gray-800">
           Login
         </CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardContent className="relative">
         <form
           className="space-y-5"
           id="login-form"
@@ -62,7 +54,12 @@ export default function LoginForm() {
               control={form.control}
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel htmlFor="username">Username</FieldLabel>
+                  <FieldLabel
+                    className="font-medium text-gray-800"
+                    htmlFor="username"
+                  >
+                    Username
+                  </FieldLabel>
                   <Input
                     {...field}
                     id="username"
@@ -81,7 +78,12 @@ export default function LoginForm() {
               control={form.control}
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel htmlFor="password">Password</FieldLabel>
+                  <FieldLabel
+                    className="font-medium text-gray-800"
+                    htmlFor="password"
+                  >
+                    Password
+                  </FieldLabel>
                   <Input
                     {...field}
                     id="password"
@@ -97,18 +99,25 @@ export default function LoginForm() {
             />
           </FieldGroup>
         </form>
-        <Link className="text-blue-600" href={"#"}>
+        <Link
+          className="text-blue-600 font-medium absolute right-4 mt-2.5 hover:underline"
+          href={"#"}
+        >
           Forgot your password?
         </Link>
       </CardContent>
       <CardFooter className="flex-col items-stretch gap-3">
-        <Button type="submit" form="login-form" className="w-full bg-blue-600">
+        <Button
+          type="submit"
+          form="login-form"
+          className="w-full bg-blue-600 py-6 text-sm mt-6 cursor-pointer hover:bg-blue-700"
+        >
           Login
         </Button>
         <div className="flex items-center justify-center text-xs text-muted-foreground">
-          <CardDescription>
+          <CardDescription className="font-medium mt-3 text-gray-500">
             Don’t have an account?{" "}
-            <Link className="text-blue-600" href={"/register"}>
+            <Link className="text-blue-600 hover:underline" href={"/register"}>
               Create yours
             </Link>
           </CardDescription>

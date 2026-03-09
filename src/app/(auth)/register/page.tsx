@@ -1,3 +1,9 @@
+import RegisterForm from "./_components/register-form";
+
 export default function RegisterPage() {
-  return <div>register</div>;
+  return (
+    <main className="flex items-center justify-center pt-8">
+      <RegisterForm />
+    </main>
+  );
 }

@@ -11,7 +11,7 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
     <>
       <aside className="grid grid-cols-2 min-h-screen">
         {/* Overlay */}
-        <div className="bg-sky-100 flex py-16">
+        <div className="bg-blue-100 flex py-16">
           {/* Panel */}
           <div className="w-3/5 mx-auto flex flex-col ">
             {/* Logo */}
@@ -26,7 +26,7 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
             </div>
             {/* Details */}
             <div className="flex flex-col gap-8">
-              <h3 className="font-inter font-bold text-3xl">
+              <h3 className="font-inter font-bold text-3xl text-gray-800">
                 Empower your learning journey with our smart exam platform.
               </h3>
               {/* List */}
