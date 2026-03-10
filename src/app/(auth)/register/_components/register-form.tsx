@@ -45,6 +45,7 @@ export default function RegisterForm() {
   function onSubmit(data: LoginValues) {}
 
   return (
+    // Header
     <Card className="w-full max-w-md">
       <CardHeader className="gap-2">
         <CardTitle className="text-3xl font-inter font-bold text-gray-800 mb-6">
@@ -59,6 +60,7 @@ export default function RegisterForm() {
         >
           <FieldGroup>
             <div className="flex gap-2.5">
+              {/* First name */}
               <Controller
                 name="firstname"
                 control={form.control}
@@ -83,6 +85,8 @@ export default function RegisterForm() {
                   </Field>
                 )}
               />
+
+              {/* Last name */}
               <Controller
                 name="lastname"
                 control={form.control}
@@ -108,6 +112,8 @@ export default function RegisterForm() {
                 )}
               />
             </div>
+
+            {/* Username */}
             <Controller
               name="username"
               control={form.control}
@@ -132,6 +138,8 @@ export default function RegisterForm() {
                 </Field>
               )}
             />
+
+            {/* Email */}
             <Controller
               name="email"
               control={form.control}
@@ -156,6 +164,8 @@ export default function RegisterForm() {
                 </Field>
               )}
             />
+
+            {/* Phone */}
             <Controller
               name="phone"
               control={form.control}
@@ -176,7 +186,7 @@ export default function RegisterForm() {
                     value={phone}
                     onChange={setPhone}
                     countries={["EG"]}
-                    // international={true}
+                    international={true}
                   />
                   {fieldState.invalid && (
                     <FieldError errors={[fieldState.error]} />
@@ -184,6 +194,8 @@ export default function RegisterForm() {
                 </Field>
               )}
             />
+
+            {/* Password */}
             <Controller
               name="password"
               control={form.control}
@@ -208,6 +220,8 @@ export default function RegisterForm() {
                 </Field>
               )}
             />
+
+            {/* Confirm password */}
             <Controller
               name="confirmPassword"
               control={form.control}
@@ -234,6 +248,8 @@ export default function RegisterForm() {
             />
           </FieldGroup>
         </form>
+
+        {/* Footer */}
         <Link
           className="text-blue-600 font-medium absolute right-4 mt-2.5 hover:underline"
           href={"#"}

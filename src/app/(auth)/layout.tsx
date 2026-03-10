@@ -1,5 +1,5 @@
+import Logo from "@/components/logo";
 import { BookOpenCheck, Brain, RectangleEllipsis } from "lucide-react";
-import Image from "next/image";
 import React from "react";
 
 interface AuthLayoutProps {
@@ -9,33 +9,28 @@ interface AuthLayoutProps {
 export default function AuthLayout({ children }: AuthLayoutProps) {
   return (
     <>
+      {/* Split screen layout */}
       <aside className="grid grid-cols-2 min-h-screen">
         {/* Overlay */}
-        <div className="bg-blue-100 flex py-16">
+        <div className="bg-blue-50 flex py-16">
           {/* Panel */}
           <div className="w-3/5 mx-auto flex flex-col ">
-            {/* Logo */}
-            <div className="flex gap-2.5 items-center text-blue-600 mb-16">
-              <Image
-                src="/folder-code.svg"
-                alt="Exam App logo"
-                width={40}
-                height={40}
-              />
-              <h2 className="font-mono font-semibold text-xl">Exam App</h2>
-            </div>
+            {/* Exam App logo */}
+            <Logo />
+
             {/* Details */}
             <div className="flex flex-col gap-8">
               <h3 className="font-inter font-bold text-3xl text-gray-800">
                 Empower your learning journey with our smart exam platform.
               </h3>
+
               {/* List */}
               <ul className="font-mono flex flex-col gap-5">
                 {/* Item 1 */}
                 <li className="flex gap-5">
                   <Brain
                     size={36}
-                    className="text-blue-600 border-2 border-blue-600 px-2.5 box-content"
+                    className="text-blue-600 outline-1 outline-blue-600 px-2.5 box-content"
                   />
                   <div className="flex flex-col">
                     <h4 className="text-blue-600 font-semibold text-xl">
@@ -47,11 +42,12 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
                     </p>
                   </div>
                 </li>
+
                 {/* Item 2 */}
                 <li className="flex gap-5">
                   <BookOpenCheck
                     size={36}
-                    className="text-blue-600 border-2 border-blue-600 px-2.5 box-content"
+                    className="text-blue-600 outline-1 outline-blue-600 px-2.5 box-content"
                   />
                   <div className="flex flex-col">
                     <h4 className="text-blue-600 font-semibold text-xl">
@@ -63,11 +59,12 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
                     </p>
                   </div>
                 </li>
+
                 {/* Item 3 */}
                 <li className="flex gap-5">
                   <RectangleEllipsis
                     size={36}
-                    className="text-blue-600 border-2 border-blue-600 px-2.5 box-content"
+                    className="text-blue-600 outline-1 outline-blue-600 px-2.5 box-content"
                   />
                   <div className="flex flex-col">
                     <h4 className="text-blue-600 font-semibold text-xl">

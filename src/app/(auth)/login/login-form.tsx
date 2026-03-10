@@ -36,6 +36,7 @@ export default function LoginForm() {
   function onSubmit(data: LoginValues) {}
 
   return (
+    // Header
     <Card className="w-full max-w-md">
       <CardHeader className="gap-2">
         <CardTitle className="text-3xl font-inter font-bold mb-6 text-gray-800">
@@ -49,6 +50,7 @@ export default function LoginForm() {
           onSubmit={form.handleSubmit(onSubmit)}
         >
           <FieldGroup>
+            {/* Username */}
             <Controller
               name="username"
               control={form.control}
@@ -73,6 +75,8 @@ export default function LoginForm() {
                 </Field>
               )}
             />
+
+            {/* Password */}
             <Controller
               name="password"
               control={form.control}
@@ -99,6 +103,8 @@ export default function LoginForm() {
             />
           </FieldGroup>
         </form>
+
+        {/* Footer */}
         <Link
           className="text-blue-600 font-medium absolute right-4 mt-2.5 hover:underline"
           href={"#"}
