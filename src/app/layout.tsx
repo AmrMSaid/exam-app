@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist_Mono, Inter } from "next/font/google";
 import "./globals.css";
+import RootProvider from "@/providers/root-provider";
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
@@ -27,7 +28,7 @@ export default function RootLayout({
         suppressHydrationWarning
         className={`${geistMono.variable} ${inter.variable} font-mono antialiased`}
       >
-        {children}
+        <RootProvider>{children}</RootProvider>
       </body>
     </html>
   );
