@@ -22,6 +22,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
               width={192}
               height={37}
               className="mb-2.5 ms-1"
+              loading="eager"
             />
 
             {/* Exam App logo */}

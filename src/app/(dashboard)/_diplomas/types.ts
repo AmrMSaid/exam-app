@@ -1,10 +1,10 @@
 export interface DiplomaResponse {
   status: boolean;
   code: number;
-  payload: Payload;
+  payload: DimplomaPayload;
 }
 
-export interface Payload {
+export interface DimplomaPayload {
   data: Diploma[];
   metadata: Metadata;
 }
