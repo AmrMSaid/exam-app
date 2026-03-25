@@ -4,7 +4,8 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { getDiplomas } from "../api";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { ChevronDown } from "lucide-react";
-import { SkeletonCards } from "./skeleton-cards";
+import { SkeletonCards } from "./skeleton";
+import Link from "next/link";
 
 export default function DiplomasList() {
   // Manage server state with useInfiniteQuery
@@ -32,7 +33,7 @@ export default function DiplomasList() {
     if (isLoading) return "Loading diplomas...";
     else if (isFetchingNextPage) return "Loading more diplomas...";
     else if (hasNextPage) return "Scroll to view more";
-    else return "Loaded all diplomas";
+    else return "End of list";
   }
 
   // Get loaded data for InfiniteScroll component
@@ -62,17 +63,23 @@ export default function DiplomasList() {
             {diplomas?.pages
               .flatMap((page) => page.payload.data)
               .map((diploma) => (
-                <div key={diploma.id} className="relative">
+                // Card
+                <Link
+                  key={diploma.id}
+                  href={`/${diploma.id}`}
+                  className="relative"
+                >
+                  {/* Image */}
                   <div className="h-52">
-                    {/* Image and title */}
                     <img
-                      src={diploma.image}
+                      // src={diploma.image}
+                      src={`/api/image?url=${encodeURIComponent(diploma.image)}`}
                       alt={diploma.title}
                       className="w-full h-full object-cover object-center"
                     />
                   </div>
 
-                  {/* Details */}
+                  {/* Title and description */}
                   <div className="absolute w-full max-h-full z-10 inset-0 p-4 text-white flex group">
                     <div className="bg-blue-600/75 backdrop-blur-md p-2.5 max-h-fit w-full mt-auto">
                       <h3 className="text-xl font-semibold">{diploma.title}</h3>
@@ -81,7 +88,7 @@ export default function DiplomasList() {
                       </p>
                     </div>
                   </div>
-                </div>
+                </Link>
               ))}
           </div>
         )}
@@ -90,7 +97,11 @@ export default function DiplomasList() {
       {/* State info footer */}
       <footer className="flex flex-col items-center justify-center mt-8">
         <p className="text-gray-600">{handleState()}</p>
-        <ChevronDown size={18} className="text-gray-400" />
+        {!isLoading && !isFetchingNextPage && hasNextPage ? (
+          <ChevronDown size={18} className="text-gray-400" />
+        ) : (
+          ""
+        )}
       </footer>
     </>
   );

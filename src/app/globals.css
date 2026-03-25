@@ -127,3 +127,7 @@
     @apply bg-background text-foreground;
   }
 }
+
+.h-31 {
+  height: 7.75rem;
+}

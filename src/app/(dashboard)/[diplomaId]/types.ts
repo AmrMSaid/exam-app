@@ -1,22 +1,32 @@
-export interface DiplomasResponse {
+import { Diploma } from "../_diplomas/types";
+
+export interface ExamsResponse {
   status: boolean;
   code: number;
-  payload: DimplomasPayload;
+  payload: Payload;
 }
 
-export interface DimplomasPayload {
-  data: Diploma[];
+export interface Payload {
+  data: Exam[];
   metadata: Metadata;
 }
 
-export interface Diploma {
+export interface Exam {
   id: string;
   title: string;
   description: string;
   image: string;
+  duration: number;
+  diplomaId: string;
   immutable: boolean;
   createdAt: string;
   updatedAt: string;
+  diploma: Diploma;
+  _count: Count;
+}
+
+export interface Count {
+  questions: number;
 }
 
 export interface Metadata {
