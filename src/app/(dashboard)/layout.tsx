@@ -1,8 +1,8 @@
-import Logo from "@/components/logo";
+import Logo from "@/shared/layouts/logo";
 import Image from "next/image";
 import React from "react";
-import { DropdownMenuDemo } from "./_components/dropdown";
-import SideLinks from "./_components/side-links";
+import { DropdownMenuDemo } from "../../shared/layouts/dashboard/dropdown";
+import SideLinks from "../../shared/layouts/dashboard/side-links";
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -17,7 +17,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
           <div className="h-full relative">
             {/* Elevate logo */}
             <Image
-              src="/Final Logo 1.svg"
+              src="/assets/images/elevate-logo.svg"
               alt="Elevate logo"
               width={192}
               height={37}
@@ -36,7 +36,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
               {/* User */}
               <div className="flex gap-2.5 absolute bottom-0 items-center">
                 <Image
-                  src="/unknown-person-icon-4.jpg"
+                  src="/assets/images/default-photo.jpg"
                   height={54}
                   width={54}
                   alt="Profile picture"

@@ -1,6 +1,6 @@
 import { GraduationCap } from "lucide-react";
-import DashboardHeader from "./_components/dashboard-header";
-import DiplomasList from "./_diplomas/components/diplomas-list";
+import DashboardHeader from "../../shared/components/dashboard-header";
+import DiplomasList from "../../features/diplomas/components/diplomas-list";
 
 // Diplomas page
 export default function HomePage() {

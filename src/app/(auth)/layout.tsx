@@ -1,4 +1,4 @@
-import Logo from "@/components/logo";
+import Logo from "@/shared/layouts/logo";
 import { BookOpenCheck, Brain, RectangleEllipsis } from "lucide-react";
 import React from "react";
 
