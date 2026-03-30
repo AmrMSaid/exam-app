@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader } from "@/shared/components/ui/card";
 import { Skeleton } from "@/shared/components/ui/skeleton";
 
-export function SkeletonCards() {
+export function DiplomasListSkeleton() {
   return (
     <div className="grid grid-cols-3 gap-4">
       {Array.from({ length: 6 }).map((_, i) => (

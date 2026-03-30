@@ -4,11 +4,12 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { getDiplomas } from "../lib/apis/diplomas.api";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { ChevronDown } from "lucide-react";
-import { SkeletonCards } from "../skeletons/diplomas-list.skeleton";
+import { DiplomasListSkeleton } from "../skeletons/diplomas-list.skeleton";
 import Link from "next/link";
+import { slugify } from "@/shared/lib/utils/slugify";
 
 export default function DiplomasList() {
-  // Manage server state with useInfiniteQuery
+  // Manage server state with useInfiniteQuery to fetch with pagination
   const {
     data: diplomas,
     isFetchingNextPage,
@@ -55,7 +56,7 @@ export default function DiplomasList() {
         loader={null}
       >
         {/* Loading skeleton */}
-        {isLoading ? <SkeletonCards /> : ""}
+        {isLoading ? <DiplomasListSkeleton /> : ""}
 
         {/* Diplomas list */}
         {diplomas && (
@@ -66,7 +67,7 @@ export default function DiplomasList() {
                 // Card
                 <Link
                   key={diploma.id}
-                  href={`/${diploma.id}`}
+                  href={`/diplomas/${slugify(diploma.title)}/${diploma.id}`}
                   className="relative"
                 >
                   {/* Image */}

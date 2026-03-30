@@ -10,13 +10,14 @@ import {
 } from "lucide-react";
 import { getExams } from "../lib/apis/exams.api";
 import { Button } from "@/shared/components/ui/button";
-import { SkeletonCards } from "../skeletons/exams-list.skeleton";
+import { ExamsListSkeleton } from "../skeletons/exams-list.skeleton";
 
 interface ExamsPageParams {
   id: string;
 }
 
 export default function ExamsList({ id }: ExamsPageParams) {
+  // Fetching with delay function for testing different loading states
   const fetchWithDelay = async (id: string, pageParam: number) => {
     const [data] = await Promise.all([
       getExams(id, pageParam),
@@ -25,7 +26,7 @@ export default function ExamsList({ id }: ExamsPageParams) {
     return data;
   };
 
-  // Manage server state with useInfiniteQuery
+  // Manage server state with useInfiniteQuery to fetch with pagination
   const {
     data: exams,
     isFetchingNextPage,
@@ -72,7 +73,7 @@ export default function ExamsList({ id }: ExamsPageParams) {
         loader={null}
       >
         {/* Loading skeleton */}
-        {isLoading ? <SkeletonCards /> : ""}
+        {isLoading ? <ExamsListSkeleton /> : ""}
 
         {/* Exams list */}
         {exams && (

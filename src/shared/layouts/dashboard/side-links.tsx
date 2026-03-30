@@ -11,7 +11,7 @@ export default function SideLinks() {
     <div className="flex flex-col justify-between gap-4">
       {/* Diplomas */}
       <Link
-        className={`flex gap-2.5 p-4 ${currentPath === "/" ? "text-blue-600 bg-blue-100 outline-1 outline-blue-500" : "text-gray-500"}`}
+        className={`flex gap-2.5 p-4 ${currentPath === "/" || currentPath.includes("diplomas") ? "text-blue-600 bg-blue-100 outline-1 outline-blue-500" : "text-gray-500"}`}
         href={"/"}
       >
         <GraduationCap

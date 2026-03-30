@@ -2,7 +2,7 @@ import * as React from "react";
 import { Slot } from "radix-ui";
 
 import { cn } from "@/shared/lib/utils/tailwind.utils";
-import { ChevronRightIcon, MoreHorizontalIcon } from "lucide-react";
+import { MoreHorizontalIcon } from "lucide-react";
 
 function Breadcrumb({ className, ...props }: React.ComponentProps<"nav">) {
   return (
@@ -82,7 +82,7 @@ function BreadcrumbSeparator({
       className={cn("[&>svg]:size-3.5", className)}
       {...props}
     >
-      {children ?? <ChevronRightIcon />}
+      {children ?? "/"}
     </li>
   );
 }
