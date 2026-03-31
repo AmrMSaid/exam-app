@@ -20,7 +20,8 @@ import {
   FieldLabel,
 } from "@/shared/components/ui/field";
 import { Input } from "@/shared/components/ui/input";
-import { loginSchema } from "../lib/schemas/login-schema";
+import { loginSchema } from "../../lib/schemas/login-schema";
+import LoginFooter from "../login-footer";
 
 type LoginValues = z.infer<typeof loginSchema>;
 
@@ -104,7 +105,6 @@ export default function LoginForm() {
           </FieldGroup>
         </form>
 
-        {/* Footer */}
         <Link
           className="text-blue-600 font-medium absolute right-4 mt-2.5 hover:underline"
           href={"#"}
@@ -112,7 +112,9 @@ export default function LoginForm() {
           Forgot your password?
         </Link>
       </CardContent>
+
       <CardFooter className="flex-col items-stretch gap-3">
+        {/* Button */}
         <Button
           type="submit"
           form="login-form"
@@ -120,14 +122,9 @@ export default function LoginForm() {
         >
           Login
         </Button>
-        <div className="flex items-center justify-center text-xs text-muted-foreground">
-          <CardDescription className="font-medium mt-3 text-gray-500">
-            Don’t have an account?{" "}
-            <Link className="text-blue-600 hover:underline" href={"/register"}>
-              Create yours
-            </Link>
-          </CardDescription>
-        </div>
+
+        {/* Footer */}
+        <LoginFooter />
       </CardFooter>
     </Card>
   );

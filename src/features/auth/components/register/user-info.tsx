@@ -1,18 +1,9 @@
 "use client";
 
-import Link from "next/link";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import * as z from "zod";
-import { Button } from "@/shared/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/shared/components/ui/card";
+import { Card, CardContent, CardFooter } from "@/shared/components/ui/card";
 import {
   Field,
   FieldError,
@@ -22,37 +13,72 @@ import {
 import { Input } from "@/shared/components/ui/input";
 import { PhoneInput } from "./phone-input";
 import { useState } from "react";
-import { registerSchema } from "../lib/schemas/register-schema";
+import { registerSchema } from "../../lib/schemas/register-schema";
+import AuthHeading from "../auth-heading";
+import { ChevronRight } from "lucide-react";
 
-type LoginValues = z.infer<typeof registerSchema>;
+type RegisterValues = z.infer<typeof registerSchema>;
 
-export default function RegisterForm() {
+export default function UserInfo() {
   const [phone, setPhone] = useState<string>();
 
-  const form = useForm<LoginValues>({
+  const form = useForm<RegisterValues>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
       firstname: "",
       lastname: "",
       username: "",
-      email: "",
       phone: "",
-      password: "",
-      confirmPassword: "",
     },
   });
 
-  function onSubmit(data: LoginValues) {}
+  function onSubmit(data: RegisterValues) {}
 
   return (
-    // Header
-    <Card className="w-full max-w-md">
-      <CardHeader className="gap-2">
-        <CardTitle className="text-3xl font-inter font-bold text-gray-800 mb-6">
-          Create Account
-        </CardTitle>
-      </CardHeader>
+    <Card className="w-full max-w-md gap-0">
+      {/* Progress */}
+      <div className="flex items-center w-full max-w-xl px-5 mb-6">
+        {/* Step 1 (completed) */}
+        <div className="flex items-center">
+          <div className="w-2.5 h-2.5 bg-blue-600 -rotate-45"></div>
+        </div>
+        {/* Line */}
+        <div className="flex-1 outline-1 outline-blue-600 mx-2"></div>
+
+        {/* Step 2 (completed) */}
+        <div className="flex items-center">
+          <div className="w-2.5 h-2.5 bg-blue-600 -rotate-45"></div>
+        </div>
+        {/* Line */}
+        <div className="flex-1 outline-1 outline-blue-600 mx-2"></div>
+
+        {/* Step 3 (completed) */}
+        <div className="flex items-center">
+          <div className="relative">
+            <div className="absolute w-2.5 h-2.5 bg-blue-600 -rotate-45 z-10 -translate-y-1/2"></div>
+            <div className="absolute inset-0 w-5.5 h-5.5 bg-blue-100 -rotate-45 -translate-x-1/4 -translate-y-1/2"></div>
+          </div>
+        </div>
+
+        {/* Line (dashed upcoming) */}
+        <div className="flex-1 h-0.5 border-t-2 border-dashed border-blue-600 mx-2"></div>
+
+        {/* Step 4 (upcoming) */}
+        <div className="flex items-center">
+          <div className="w-2.5 h-2.5 outline-1 outline-blue-600 bg-blue-50 -rotate-45"></div>
+        </div>
+      </div>
+
+      {/* Heading */}
+      <AuthHeading text={"Create Account"} />
+
+      {/* Subheader */}
+      <h3 className="font-inter text-blue-600 font-bold text-2xl mb-8 ms-4">
+        Tell us more about you
+      </h3>
+
       <CardContent className="relative">
+        {/* Form */}
         <form
           className="space-y-5"
           id="login-form"
@@ -67,10 +93,10 @@ export default function RegisterForm() {
                 render={({ field, fieldState }) => (
                   <Field data-invalid={fieldState.invalid}>
                     <FieldLabel
-                      className="font-medium text-gray-800"
+                      className="font-medium text-gray-800 gap-0"
                       htmlFor="firstname"
                     >
-                      First name
+                      First name<span className="text-red-600">*</span>
                     </FieldLabel>
                     <Input
                       {...field}
@@ -93,10 +119,10 @@ export default function RegisterForm() {
                 render={({ field, fieldState }) => (
                   <Field data-invalid={fieldState.invalid}>
                     <FieldLabel
-                      className="font-medium text-gray-800"
+                      className="font-medium text-gray-800 gap-0"
                       htmlFor="lastname"
                     >
-                      Last name
+                      Last name<span className="text-red-600">*</span>
                     </FieldLabel>
                     <Input
                       {...field}
@@ -120,10 +146,10 @@ export default function RegisterForm() {
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
                   <FieldLabel
-                    className="font-medium text-gray-800"
+                    className="font-medium text-gray-800 gap-0"
                     htmlFor="username"
                   >
-                    Username
+                    Username<span className="text-red-600">*</span>
                   </FieldLabel>
                   <Input
                     {...field}
@@ -131,32 +157,6 @@ export default function RegisterForm() {
                     type="text"
                     aria-invalid={fieldState.invalid}
                     placeholder="user123"
-                  />
-                  {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
-                  )}
-                </Field>
-              )}
-            />
-
-            {/* Email */}
-            <Controller
-              name="email"
-              control={form.control}
-              render={({ field, fieldState }) => (
-                <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel
-                    className="font-medium text-gray-800"
-                    htmlFor="email"
-                  >
-                    Email
-                  </FieldLabel>
-                  <Input
-                    {...field}
-                    id="email"
-                    type="email"
-                    aria-invalid={fieldState.invalid}
-                    placeholder="user@example.com"
                   />
                   {fieldState.invalid && (
                     <FieldError errors={[fieldState.error]} />
@@ -194,85 +194,20 @@ export default function RegisterForm() {
                 </Field>
               )}
             />
-
-            {/* Password */}
-            <Controller
-              name="password"
-              control={form.control}
-              render={({ field, fieldState }) => (
-                <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel
-                    className="font-medium text-gray-800"
-                    htmlFor="password"
-                  >
-                    Password
-                  </FieldLabel>
-                  <Input
-                    {...field}
-                    id="password"
-                    type="password"
-                    aria-invalid={fieldState.invalid}
-                    placeholder="********"
-                  />
-                  {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
-                  )}
-                </Field>
-              )}
-            />
-
-            {/* Confirm password */}
-            <Controller
-              name="confirmPassword"
-              control={form.control}
-              render={({ field, fieldState }) => (
-                <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel
-                    className="font-medium text-gray-800"
-                    htmlFor="confirmPassword"
-                  >
-                    Confirm Password
-                  </FieldLabel>
-                  <Input
-                    {...field}
-                    id="confirmPassword"
-                    type="password"
-                    aria-invalid={fieldState.invalid}
-                    placeholder="********"
-                  />
-                  {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
-                  )}
-                </Field>
-              )}
-            />
           </FieldGroup>
         </form>
-
-        {/* Footer */}
-        <Link
-          className="text-blue-600 font-medium absolute right-4 mt-2.5 hover:underline"
-          href={"#"}
-        >
-          Forgot your password?
-        </Link>
       </CardContent>
+
+      {/* Button */}
       <CardFooter className="flex-col items-stretch gap-3">
-        <Button
+        <button
           type="submit"
           form="login-form"
-          className="w-full bg-blue-600 py-6 text-sm mt-6 cursor-pointer hover:bg-blue-700"
+          className="flex gap-2.5 items-center justify-center w-full bg-blue-50 outline-1 outline-blue-600 text-gray-800 font-medium py-3.5 text-sm mt-6 cursor-pointer hover:outline-2"
         >
-          Login
-        </Button>
-        <div className="flex items-center justify-center text-xs text-muted-foreground">
-          <CardDescription className="font-medium mt-3 text-gray-500">
-            Don’t have an account?{" "}
-            <Link className="text-blue-600 hover:underline" href={"/register"}>
-              Create yours
-            </Link>
-          </CardDescription>
-        </div>
+          Next
+          <ChevronRight size={16} />
+        </button>
       </CardFooter>
     </Card>
   );

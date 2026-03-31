@@ -19,21 +19,20 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
             <Logo />
 
             {/* Details */}
-            <div className="flex flex-col gap-8">
+            <div className="flex flex-col gap-10">
               <h3 className="font-inter font-bold text-3xl text-gray-800">
                 Empower your learning journey with our smart exam platform.
               </h3>
 
               {/* List */}
-              <ul className="font-mono flex flex-col gap-5">
+              <ul className="font-mono flex flex-col gap-6">
                 {/* Item 1 */}
-                <li className="flex gap-5">
-                  <Brain
-                    size={36}
-                    className="text-blue-600 outline-1 outline-blue-600 px-2.5 box-content"
-                  />
+                <li className="flex gap-6">
+                  <div className="outline-2 outline-blue-600 p-1.5 h-fit">
+                    <Brain size={24} className="text-blue-600" />
+                  </div>
                   <div className="flex flex-col">
-                    <h4 className="text-blue-600 font-semibold text-xl">
+                    <h4 className="text-blue-600 font-semibold text-xl mb-2">
                       Tailored Diplomas
                     </h4>
                     <p className="text-gray-700">
@@ -44,13 +43,12 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
                 </li>
 
                 {/* Item 2 */}
-                <li className="flex gap-5">
-                  <BookOpenCheck
-                    size={36}
-                    className="text-blue-600 outline-1 outline-blue-600 px-2.5 box-content"
-                  />
+                <li className="flex gap-6">
+                  <div className="outline-2 outline-blue-600 p-1.5 h-fit">
+                    <BookOpenCheck size={24} className="text-blue-600" />
+                  </div>
                   <div className="flex flex-col">
-                    <h4 className="text-blue-600 font-semibold text-xl">
+                    <h4 className="text-blue-600 font-semibold text-xl mb-2">
                       Focused Exams
                     </h4>
                     <p className="text-gray-700">
@@ -61,13 +59,12 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
                 </li>
 
                 {/* Item 3 */}
-                <li className="flex gap-5">
-                  <RectangleEllipsis
-                    size={36}
-                    className="text-blue-600 outline-1 outline-blue-600 px-2.5 box-content"
-                  />
+                <li className="flex gap-6">
+                  <div className="outline-2 outline-blue-600 p-1.5 h-fit">
+                    <RectangleEllipsis size={24} className="text-blue-600" />
+                  </div>
                   <div className="flex flex-col">
-                    <h4 className="text-blue-600 font-semibold text-xl">
+                    <h4 className="text-blue-600 font-semibold text-xl mb-2">
                       Smart Multi-Step Forms
                     </h4>
                     <p className="text-gray-700">
@@ -80,6 +77,8 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
             </div>
           </div>
         </div>
+
+        {/* Auth pages */}
         {children}
       </aside>
     </>
