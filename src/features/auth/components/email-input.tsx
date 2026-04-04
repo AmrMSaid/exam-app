@@ -8,8 +8,8 @@ import {
 } from "@/shared/components/ui/field";
 import { Input } from "@/shared/components/ui/input";
 import { Controller } from "react-hook-form";
-import { RegisterValues } from "../lib/types/types";
 import { Control } from "react-hook-form";
+import { RegisterValues } from "../lib/types/forms";
 
 interface EmailInputProps {
   control: Control<RegisterValues>;

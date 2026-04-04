@@ -1,6 +1,6 @@
-declare type ApiResponse<T> = T | { message: string };
+declare type ApiResponse<T> = ErrorResponse | SuccessResponse<T>;
 
-export interface ErrorResponse {
+declare interface ErrorResponse {
   status: false;
   code: number;
   message: string;
@@ -10,7 +10,7 @@ export interface ErrorResponse {
   }>;
 }
 
-export interface SuccessResponse<T> {
+declare interface SuccessResponse<T> {
   status: true;
   code: number;
   message?: string;

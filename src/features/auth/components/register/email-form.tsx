@@ -9,7 +9,7 @@ import {
 } from "@/shared/components/ui/card";
 import AuthHeading from "../auth-heading";
 import { ChevronRight } from "lucide-react";
-import { RegisterValues } from "../../lib/types/types";
+import { RegisterValues } from "../../lib/types/auth";
 import EmailInput from "../email-input";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";

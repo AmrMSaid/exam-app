@@ -1,8 +1,8 @@
-import { USER_ROLES } from "../constants/api.constants";
+import { USER_ROLES } from "../../../../shared/lib/constants/api.constants";
 
 export type Role = (typeof USER_ROLES)[keyof typeof USER_ROLES];
 
-export interface User {
+export interface IUser {
   id: string;
   username: string;
   email: string;

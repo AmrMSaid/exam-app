@@ -3,12 +3,12 @@
 import { Card, CardContent, CardFooter } from "@/shared/components/ui/card";
 import AuthHeading from "../auth-heading";
 import { ChevronRight } from "lucide-react";
-import { RegisterValues } from "../../lib/types/types";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { registerSchema } from "../../lib/schemas/register-schema";
 import LoginFooter from "../login-footer";
 import PasswordInput from "../password-input";
+import { RegisterValues } from "../../lib/types/forms";
 
 export default function ResetPassword() {
   const form = useForm<RegisterValues>({
