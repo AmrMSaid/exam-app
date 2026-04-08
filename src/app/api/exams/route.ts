@@ -1,4 +1,5 @@
-import { DiplomasResponse } from "@/features/diplomas/lib/types/diplomas";
+import { getNextAuthToken } from "@/features/auth/lib/utils/auth.util";
+import { ExamsResponse } from "@/features/exams/lib/types/exams";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
@@ -6,15 +7,18 @@ export async function GET(request: NextRequest) {
   const page = Number(searchParams.get("page") || 1);
   const id = searchParams.get("diplomaId");
 
+  const jwt = await getNextAuthToken();
+  const token = jwt?.token;
+
   const response = await fetch(
-    `${process.env.API}exams?diplomaId=${id}&page=${page}&limit=3`,
+    `${process.env.NEXT_PUBLIC_API_URL}/exams?diplomaId=${id}&page=${page}&limit=3`,
     {
       headers: {
-        Authorization: `Bearer ${process.env.TOKEN}`,
+        Authorization: `Bearer ${token}`,
       },
     },
   );
-  const data: DiplomasResponse = await response.json();
+  const data: ExamsResponse = await response.json();
 
   return NextResponse.json(data, { status: 200 });
 }

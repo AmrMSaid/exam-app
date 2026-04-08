@@ -3,12 +3,10 @@
 import Link from "next/link";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
-import * as z from "zod";
 import { Button } from "@/shared/components/ui/button";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -22,10 +20,13 @@ import {
 import { Input } from "@/shared/components/ui/input";
 import { loginSchema } from "../../lib/schemas/login-schema";
 import LoginFooter from "../login-footer";
-
-type LoginValues = z.infer<typeof loginSchema>;
+import { LoginValues } from "../../lib/types/forms";
+import { useState } from "react";
+import { signIn } from "next-auth/react";
 
 export default function LoginForm() {
+  const [error, setError] = useState<string | null>(null);
+
   const form = useForm<LoginValues>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -34,7 +35,18 @@ export default function LoginForm() {
     },
   });
 
-  function onSubmit(data: LoginValues) {}
+  async function onSubmit(data: LoginValues) {
+    const res = await signIn("credentials", {
+      username: data.username,
+      password: data.password,
+      redirect: false,
+    });
+    if (!res?.ok) {
+      setError(res?.error || "An error occurred");
+      return;
+    }
+    location.href = "/";
+  }
 
   return (
     // Header
@@ -112,6 +124,8 @@ export default function LoginForm() {
           Forgot your password?
         </Link>
       </CardContent>
+
+      {error && <p className="text-red-500 text-sm">{error}</p>}
 
       <CardFooter className="flex-col items-stretch gap-3">
         {/* Button */}
