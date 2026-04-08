@@ -3,12 +3,19 @@ import Image from "next/image";
 import React from "react";
 import { DropdownMenuDemo } from "../../shared/layouts/dashboard/dropdown";
 import SideLinks from "../../shared/layouts/dashboard/side-links";
+import Link from "next/link";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/features/auth/lib/auth";
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
 }
 
-export default function DashboardLayout({ children }: DashboardLayoutProps) {
+export default async function DashboardLayout({
+  children,
+}: DashboardLayoutProps) {
+  const session = await getServerSession(authOptions);
+
   return (
     <>
       {/* Sidebar */}
@@ -16,17 +23,21 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
         <div className="bg-blue-50 p-10">
           <div className="h-full relative">
             {/* Elevate logo */}
-            <Image
-              src="/assets/images/elevate-logo.svg"
-              alt="Elevate logo"
-              width={192}
-              height={37}
-              className="mb-2.5 ms-1"
-              loading="eager"
-            />
+            <Link href="/">
+              <Image
+                src="/assets/images/elevate-logo.svg"
+                alt="Elevate"
+                width={192}
+                height={37}
+                className="mb-2.5 ms-1"
+                loading="eager"
+              />
+            </Link>
 
             {/* Exam App logo */}
-            <Logo />
+            <Link href="/">
+              <Logo />
+            </Link>
 
             {/* Navigation */}
             <nav>
@@ -36,16 +47,21 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
               {/* User */}
               <div className="flex gap-2.5 absolute bottom-0 items-center">
                 <Image
-                  src="/assets/images/default-photo.jpg"
+                  src={
+                    session?.user.profilePhoto ??
+                    `/assets/images/default-photo.jpg`
+                  }
                   height={54}
                   width={54}
                   alt="Profile picture"
                   className="outline-1 outline-blue-500"
                 />
                 <div className="flex flex-col justify-center">
-                  <p className="text-blue-600 font-medium">Firstname</p>
-                  <p className="text-gray-500 font-medium">
-                    user-email@example.com
+                  <p className="text-blue-600 font-medium">
+                    {session?.user.firstName}
+                  </p>
+                  <p className="text-gray-500 font-medium break-all">
+                    {session?.user.email}
                   </p>
                 </div>
                 <DropdownMenuDemo />
@@ -53,6 +69,8 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
             </nav>
           </div>
         </div>
+
+        {/* Dashboard pages */}
         {children}
       </aside>
     </>

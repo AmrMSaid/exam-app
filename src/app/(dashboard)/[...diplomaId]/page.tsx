@@ -1,7 +1,7 @@
 import { BookOpenCheck } from "lucide-react";
 import DashboardHeader from "../../../shared/components/dashboard-header";
 import ExamsList from "../../../features/exams/components/exams-list";
-import { getDiplomaById } from "../../../features/diplomas/lib/apis/diplomas.api";
+import { getDiplomaById } from "../../../features/diplomas/lib/apis/diploma.api";
 import { ExamsBreadcrumb } from "@/features/exams/components/exams-breadcrumb";
 
 interface ExamsPageProps {

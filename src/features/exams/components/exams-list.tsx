@@ -17,15 +17,6 @@ interface ExamsPageParams {
 }
 
 export default function ExamsList({ id }: ExamsPageParams) {
-  // Fetching with delay function for testing different loading states
-  const fetchWithDelay = async (id: string, pageParam: number) => {
-    const [data] = await Promise.all([
-      getExams(id, pageParam),
-      new Promise((resolve) => setTimeout(resolve, 1000)),
-    ]);
-    return data;
-  };
-
   // Manage server state with useInfiniteQuery to fetch with pagination
   const {
     data: exams,
@@ -35,7 +26,7 @@ export default function ExamsList({ id }: ExamsPageParams) {
     isLoading,
   } = useInfiniteQuery({
     queryKey: ["exams", id],
-    queryFn: ({ pageParam }) => fetchWithDelay(id, pageParam),
+    queryFn: ({ pageParam }) => getExams(id, pageParam),
     initialPageParam: 1,
     getNextPageParam: (lastpage) => {
       if (

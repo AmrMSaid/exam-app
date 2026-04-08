@@ -5,7 +5,7 @@ export default function Logo() {
     <div className="flex gap-2.5 items-center text-blue-600 mb-16">
       <Image
         src="/assets/icons/folder-code.svg"
-        alt="Exam App logo"
+        alt="Exam App"
         width={40}
         height={40}
       />
