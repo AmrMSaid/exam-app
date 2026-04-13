@@ -5,9 +5,9 @@ import VerifyOtp from "@/features/auth/components/forgot-password/verify-otp";
 export default function ForgotPasswordPage() {
   return (
     <main className="flex items-center justify-center">
-      {/* <ForgotPassword /> */}
+      <ForgotPassword />
       {/* <VerifyOtp /> */}
-      <ResetPassword />
+      {/* <ResetPassword /> */}
     </main>
   );
 }

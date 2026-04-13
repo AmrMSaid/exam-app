@@ -23,7 +23,10 @@ export default function EmailInput({ control }: EmailInputProps) {
         control={control}
         render={({ field, fieldState }) => (
           <Field data-invalid={fieldState.invalid}>
-            <FieldLabel className="font-medium text-gray-800" htmlFor="email">
+            <FieldLabel
+              className="font-medium text-gray-800 text-base"
+              htmlFor="email"
+            >
               Email
             </FieldLabel>
             <Input
@@ -32,6 +35,7 @@ export default function EmailInput({ control }: EmailInputProps) {
               type="email"
               aria-invalid={fieldState.invalid}
               placeholder="user@example.com"
+              className="h-11"
             />
             {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
           </Field>

@@ -7,7 +7,6 @@ import { Button } from "@/shared/components/ui/button";
 import {
   Card,
   CardContent,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/shared/components/ui/card";
@@ -23,9 +22,12 @@ import LoginFooter from "../login-footer";
 import { LoginValues } from "../../lib/types/forms";
 import { useState } from "react";
 import { signIn } from "next-auth/react";
+import { CircleX, Eye, EyeOff, Loader2 } from "lucide-react";
 
 export default function LoginForm() {
   const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const form = useForm<LoginValues>({
     resolver: zodResolver(loginSchema),
@@ -36,16 +38,22 @@ export default function LoginForm() {
   });
 
   async function onSubmit(data: LoginValues) {
+    setIsLoading(true);
+
     const res = await signIn("credentials", {
       username: data.username,
       password: data.password,
       redirect: false,
     });
+    setIsLoading(false);
+
     if (!res?.ok) {
       setError(res?.error || "An error occurred");
       return;
     }
-    location.href = "/";
+    const callbackUrl =
+      new URLSearchParams(location.search).get("callbackUrl") || "/";
+    location.href = callbackUrl;
   }
 
   return (
@@ -70,7 +78,7 @@ export default function LoginForm() {
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
                   <FieldLabel
-                    className="font-medium text-gray-800"
+                    className="font-medium text-gray-800 text-base"
                     htmlFor="username"
                   >
                     Username
@@ -81,9 +89,13 @@ export default function LoginForm() {
                     type="text"
                     aria-invalid={fieldState.invalid}
                     placeholder="user123"
+                    className="h-11"
                   />
                   {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
+                    <FieldError
+                      className="text-sm"
+                      errors={[fieldState.error]}
+                    />
                   )}
                 </Field>
               )}
@@ -94,9 +106,14 @@ export default function LoginForm() {
               name="password"
               control={form.control}
               render={({ field, fieldState }) => (
-                <Field data-invalid={fieldState.invalid}>
+                <div
+                  data-invalid={fieldState.invalid}
+                  className="relative"
+                  role="group"
+                  data-slot="field"
+                >
                   <FieldLabel
-                    className="font-medium text-gray-800"
+                    className="font-medium text-gray-800 text-base mb-2"
                     htmlFor="password"
                   >
                     Password
@@ -104,42 +121,84 @@ export default function LoginForm() {
                   <Input
                     {...field}
                     id="password"
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     aria-invalid={fieldState.invalid}
                     placeholder="********"
+                    className="h-11"
                   />
+                  <button
+                    type="button"
+                    aria-label="Toggle password visibility"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 bottom-3.5 h-fit text-gray-400 cursor-pointer"
+                  >
+                    {showPassword ? (
+                      <EyeOff size={18} strokeWidth={1} absoluteStrokeWidth />
+                    ) : (
+                      <Eye size={18} strokeWidth={1} absoluteStrokeWidth />
+                    )}
+                  </button>
                   {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
+                    <FieldError
+                      className="text-sm"
+                      errors={[fieldState.error]}
+                    />
                   )}
-                </Field>
+                </div>
               )}
             />
           </FieldGroup>
         </form>
 
         <Link
-          className="text-blue-600 font-medium absolute right-4 mt-2.5 hover:underline"
+          className="text-blue-600 font-medium absolute right-4 mt-2.5 hover:underline hover:text-blue-700 text-sm"
           href={"#"}
         >
           Forgot your password?
         </Link>
       </CardContent>
+      <span></span>
 
-      {error && <p className="text-red-500 text-sm">{error}</p>}
+      {error && (
+        <div className="flex justify-center mt-10">
+          <div className="relative w-full max-w-2xl">
+            <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-2">
+              <div className="w-8 h-8 flex items-center justify-center text-red-600">
+                <CircleX
+                  size={18}
+                  fill="white"
+                  strokeWidth={1}
+                  absoluteStrokeWidth
+                />
+              </div>
+            </div>
+            <div className="outline-1 outline-red-600 bg-red-50 text-red-600 text-center py-2 mx-4.5 text-sm">
+              {error}
+            </div>
+          </div>
+        </div>
+      )}
 
-      <CardFooter className="flex-col items-stretch gap-3">
-        {/* Button */}
-        <Button
-          type="submit"
-          form="login-form"
-          className="w-full bg-blue-600 py-6 text-sm mt-6 cursor-pointer hover:bg-blue-700"
-        >
-          Login
-        </Button>
+      {/* Button */}
+      <Button
+        type="submit"
+        form="login-form"
+        disabled={isLoading}
+        aria-busy={isLoading}
+        className="bg-blue-600 py-6 text-sm cursor-pointer hover:bg-blue-700 mt-6 mx-4 disabled:bg-gray-200 disabled:text-gray-400"
+      >
+        {isLoading ? (
+          <>
+            <Loader2 className="animate-spin" />
+            Logging in...
+          </>
+        ) : (
+          "Login"
+        )}
+      </Button>
 
-        {/* Footer */}
-        <LoginFooter />
-      </CardFooter>
+      {/* Footer */}
+      <LoginFooter />
     </Card>
   );
 }

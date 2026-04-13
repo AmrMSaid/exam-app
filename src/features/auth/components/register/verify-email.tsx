@@ -71,7 +71,7 @@ export default function VerifyEmail() {
         <button
           type="submit"
           form="login-form"
-          className="w-full bg-blue-50 outline-1 outline-blue-600 text-gray-800 font-medium py-3.5 text-sm mt-6 cursor-pointer hover:outline-2"
+          className="w-full bg-blue-50 outline-1 outline-blue-600 text-gray-800 font-medium py-3.5 text-sm mt-6 cursor-pointer hover:bg-blue-100"
         >
           Verify Code
         </button>

@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { registerSchema } from "../../lib/schemas/register-schema";
 import LoginFooter from "../login-footer";
-import PasswordInput from "../password-input";
+import PasswordInputs from "../password-inputs";
 import { RegisterValues } from "../../lib/types/forms";
 
 export default function ResetPassword() {
@@ -37,7 +37,7 @@ export default function ResetPassword() {
           id="login-form"
           onSubmit={form.handleSubmit(onSubmit)}
         >
-          <PasswordInput control={form.control} />
+          <PasswordInputs control={form.control} />
         </form>
       </CardContent>
 

@@ -10,7 +10,6 @@ export default function RegisterPage() {
       {/* <VerifyEmail /> */}
       {/* <UserInfo/> */}
       {/* <PasswordForm /> */}
-      {/* <RegisterForm /> */}
     </main>
   );
 }

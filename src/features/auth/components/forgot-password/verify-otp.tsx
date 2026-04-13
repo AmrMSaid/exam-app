@@ -5,7 +5,7 @@ import LoginFooter from "../login-footer";
 export default function VerifyOtp() {
   return (
     <div className="w-full max-w-lg p-2">
-      <div className=" outline-2 outline-gray-200 w-fit ms-4 mb-8 p-2 cursor-pointer hover:outline-gray-300">
+      <div className="outline-2 outline-gray-200 w-fit ms-4 mb-8 p-2 cursor-pointer hover:bg-gray-50">
         <MoveLeft />
       </div>
 

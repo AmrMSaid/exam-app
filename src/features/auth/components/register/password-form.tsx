@@ -1,20 +1,13 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { Button } from "@/shared/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/shared/components/ui/card";
-import {
-  Field,
-  FieldError,
-  FieldGroup,
-  FieldLabel,
-} from "@/shared/components/ui/field";
-import { Input } from "@/shared/components/ui/input";
 import { registerSchema } from "../../lib/schemas/register-schema";
 import AuthHeading from "../auth-heading";
-import PasswordInput from "../password-input";
+import PasswordInputs from "../password-inputs";
 
 type RegisterValues = z.infer<typeof registerSchema>;
 
@@ -78,7 +71,7 @@ export default function PasswordForm() {
           id="login-form"
           onSubmit={form.handleSubmit(onSubmit)}
         >
-          <PasswordInput control={form.control} />
+          <PasswordInputs control={form.control} />
         </form>
       </CardContent>
 

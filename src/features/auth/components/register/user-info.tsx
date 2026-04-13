@@ -93,7 +93,7 @@ export default function UserInfo() {
                 render={({ field, fieldState }) => (
                   <Field data-invalid={fieldState.invalid}>
                     <FieldLabel
-                      className="font-medium text-gray-800 gap-0"
+                      className="font-medium text-gray-800 gap-0 text-base"
                       htmlFor="firstname"
                     >
                       First name<span className="text-red-600">*</span>
@@ -104,6 +104,7 @@ export default function UserInfo() {
                       type="text"
                       aria-invalid={fieldState.invalid}
                       placeholder="Ahmed"
+                      className="h-11"
                     />
                     {fieldState.invalid && (
                       <FieldError errors={[fieldState.error]} />
@@ -119,7 +120,7 @@ export default function UserInfo() {
                 render={({ field, fieldState }) => (
                   <Field data-invalid={fieldState.invalid}>
                     <FieldLabel
-                      className="font-medium text-gray-800 gap-0"
+                      className="font-medium text-gray-800 gap-0 text-base"
                       htmlFor="lastname"
                     >
                       Last name<span className="text-red-600">*</span>
@@ -130,6 +131,7 @@ export default function UserInfo() {
                       type="text"
                       aria-invalid={fieldState.invalid}
                       placeholder="Abdullah"
+                      className="h-11"
                     />
                     {fieldState.invalid && (
                       <FieldError errors={[fieldState.error]} />
@@ -146,7 +148,7 @@ export default function UserInfo() {
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
                   <FieldLabel
-                    className="font-medium text-gray-800 gap-0"
+                    className="font-medium text-gray-800 gap-0 text-base"
                     htmlFor="username"
                   >
                     Username<span className="text-red-600">*</span>
@@ -157,6 +159,7 @@ export default function UserInfo() {
                     type="text"
                     aria-invalid={fieldState.invalid}
                     placeholder="user123"
+                    className="h-11"
                   />
                   {fieldState.invalid && (
                     <FieldError errors={[fieldState.error]} />
@@ -172,7 +175,7 @@ export default function UserInfo() {
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
                   <FieldLabel
-                    className="font-medium text-gray-800"
+                    className="font-medium text-gray-800 text-base"
                     htmlFor="phone"
                   >
                     Phone
@@ -203,7 +206,7 @@ export default function UserInfo() {
         <button
           type="submit"
           form="login-form"
-          className="flex gap-2.5 items-center justify-center w-full bg-blue-50 outline-1 outline-blue-600 text-gray-800 font-medium py-3.5 text-sm mt-6 cursor-pointer hover:outline-2"
+          className="flex gap-2.5 items-center justify-center w-full bg-blue-50 outline-1 outline-blue-600 text-gray-800 font-medium py-3.5 text-sm mt-6 cursor-pointer hover:bg-blue-100"
         >
           Next
           <ChevronRight size={16} />
