@@ -15,9 +15,4 @@ export interface UpdateProfileFields {
   lastName: string;
 }
 
-export interface UpdateProfileResponse {
-  status: true;
-  code: number;
-  message: string;
-  payload: IUser;
-}
+export type UpdateProfileResponse = IUser;

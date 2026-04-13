@@ -46,16 +46,18 @@ export default async function DashboardLayout({
 
               {/* User */}
               <div className="flex gap-2.5 absolute bottom-0 items-center">
-                <Image
-                  src={
-                    session?.user.profilePhoto ??
-                    `/assets/images/default-photo.jpg`
-                  }
-                  height={54}
-                  width={54}
-                  alt="Profile picture"
-                  className="outline-1 outline-blue-500"
-                />
+                <Link href={"/account"}>
+                  <Image
+                    src={
+                      session?.user.profilePhoto ??
+                      "/assets/images/default-photo.jpg"
+                    }
+                    height={54}
+                    width={54}
+                    alt="Profile picture"
+                    className="outline-1 outline-blue-500"
+                  />
+                </Link>
                 <div className="flex flex-col justify-center">
                   <p className="text-blue-600 font-medium">
                     {session?.user.firstName}

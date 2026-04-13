@@ -1,7 +1,7 @@
 import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
 
-const privateRoutes = new Set(["/", "/account"]);
+const privateRoutes = new Set(["/", "/diplomas/**", "/account"]);
 const authRoutes = new Set(["/login", "/register"]);
 
 export default async function proxy(request: NextRequest) {
@@ -15,6 +15,8 @@ export default async function proxy(request: NextRequest) {
     if (jwt) return NextResponse.next();
 
     const redirectUrl = new URL("/login", request.nextUrl.origin);
+    redirectUrl.searchParams.set("callbackUrl", pathname);
+
     return NextResponse.redirect(redirectUrl);
   }
 

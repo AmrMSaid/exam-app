@@ -24,6 +24,7 @@ export default async function ExamsPage({ params }: ExamsPageProps) {
         <DashboardHeader
           icon={BookOpenCheck}
           title={`${payload.diploma.title} Exams`}
+          link={"/"}
         />
         <ExamsList id={id} />
       </main>
