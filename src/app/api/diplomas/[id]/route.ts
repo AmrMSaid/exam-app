@@ -1,5 +1,5 @@
 import { getNextAuthToken } from "@/features/auth/lib/utils/auth.util";
-import { DiplomaByIdResponse } from "@/features/diplomas/lib/types/diploma";
+import { IDiplomaByIdResponse } from "@/features/diplomas/lib/types/diploma";
 import { NextResponse } from "next/server";
 
 export async function GET(
@@ -9,7 +9,7 @@ export async function GET(
   const { id } = await params;
 
   const jwt = await getNextAuthToken();
-  const token = jwt?.token;
+  const token = jwt?.accessToken;
 
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/diplomas/${id}`,
@@ -19,7 +19,7 @@ export async function GET(
       },
     },
   );
-  const data: DiplomaByIdResponse = await response.json();
+  const data: IDiplomaByIdResponse = await response.json();
 
   return NextResponse.json(data, { status: 200 });
 }

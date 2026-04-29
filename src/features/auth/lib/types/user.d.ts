@@ -1,6 +1,8 @@
-import { USER_ROLES } from "../../../../shared/lib/constants/api.constants";
+import { USER_ROLES } from "../constants/user.constant";
 
-export type Role = (typeof USER_ROLES)[keyof typeof USER_ROLES];
+// User
+
+export type IRole = (typeof USER_ROLES)[keyof typeof USER_ROLES];
 
 export interface IUser {
   id: string;
@@ -12,7 +14,13 @@ export interface IUser {
   profilePhoto: string | null;
   emailVerified: boolean;
   phoneVerified: boolean;
-  role: Role;
+  role: IRole;
   createdAt: string;
   updatedAt: string;
 }
+
+// Update profile
+
+export type IUpdateProfileFields = z.infer<typeof updateProfileBodySchema>;
+
+export type IUpdateProfileResponse = IUser;
