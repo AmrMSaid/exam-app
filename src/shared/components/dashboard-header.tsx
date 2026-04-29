@@ -17,7 +17,7 @@ export default function DashboardHeader({
       {/* Back button */}
       <Link
         href={link}
-        className="flex items-center bg-white outline-1 outline-blue-600 text-blue-600 px-1.5 cursor-pointer hover:bg-blue-50"
+        className="flex items-center bg-white border border-blue-600 text-blue-600 px-1.5 cursor-pointer hover:bg-blue-50"
       >
         <ChevronLeft strokeWidth={1} />
       </Link>

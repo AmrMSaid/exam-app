@@ -1,5 +1,10 @@
-export const USER_ROLES = {
-  ADMIN: "ADMIN",
-  SUPER_ADMIN: "SUPER_ADMIN",
-  USER: "USER",
-} as const;
+export const HEADERS = {
+  jsonBody: {
+    "Content-Type": "application/json",
+  },
+  authorization: (token: string) => ({
+    Authorization: `Bearer ${token}`,
+  }),
+};
+
+export const PAGINATION_LIMIT = 6;

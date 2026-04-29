@@ -1,52 +1,36 @@
 "use client";
 
-import { useInfiniteQuery } from "@tanstack/react-query";
-import { getDiplomas } from "../lib/apis/diplomas.api";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { ChevronDown } from "lucide-react";
 import { DiplomasListSkeleton } from "../skeletons/diplomas-list.skeleton";
-import Link from "next/link";
-import { slugify } from "@/shared/lib/utils/slugify";
+import { useDiplomaList } from "../hooks/use-diploma-list";
+import { useMemo } from "react";
+import DiplomaItem from "./diploma-item";
+import ListStatus from "@/shared/components/list-status";
 
-export default function DiplomasList() {
-  // Manage server state with useInfiniteQuery to fetch with pagination
+export default function DiplomaList() {
+  // Queries
   const {
-    data: diplomas,
-    isFetchingNextPage,
-    hasNextPage,
-    fetchNextPage,
+    data: diplomaPages,
     isLoading,
-  } = useInfiniteQuery({
-    queryKey: ["diplomas"],
-    queryFn: ({ pageParam }) => getDiplomas(pageParam),
-    initialPageParam: 1,
-    getNextPageParam: (lastpage) => {
-      if (
-        lastpage.payload.metadata.page === lastpage.payload.metadata.totalPages
-      )
-        return undefined;
-      return lastpage.payload.metadata.page + 1;
-    },
-  });
+    isError,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useDiplomaList();
 
-  // Handle state info in footer
-  function handleState() {
-    if (isLoading) return "Loading diplomas...";
-    else if (isFetchingNextPage) return "Loading more diplomas...";
-    else if (hasNextPage) return "Scroll to view more";
-    else return "End of list";
-  }
-
-  // Get loaded data for InfiniteScroll component
-  const loadedData = diplomas?.pages.flatMap((page) => page.payload.data) ?? [];
+  // Variables
+  const allDiplomas = useMemo(
+    () => diplomaPages?.pages.flatMap((page) => page.data) || [],
+    [diplomaPages],
+  );
 
   return (
     <>
-      {/* Handle fetch on scoll with react-infinite-scroll-component */}
+      {/* Handle fetch on scroll with react-infinite-scroll-component */}
       <InfiniteScroll
         scrollableTarget="scrollableDiv"
         height={470}
-        dataLength={loadedData.length}
+        dataLength={allDiplomas.length}
         next={() => {
           if (!isLoading && !isFetchingNextPage && hasNextPage) {
             fetchNextPage();
@@ -59,51 +43,21 @@ export default function DiplomasList() {
         {isLoading ? <DiplomasListSkeleton /> : ""}
 
         {/* Diplomas list */}
-        {diplomas && (
-          <div className="grid grid-cols-3 gap-2.5 py-6">
-            {diplomas?.pages
-              .flatMap((page) => page.payload.data)
-              .map((diploma) => (
-                // Card
-                <Link
-                  key={diploma.id}
-                  href={`/diplomas/${slugify(diploma.title)}/${diploma.id}`}
-                  className="relative"
-                >
-                  {/* Image */}
-                  <div className="h-52">
-                    <img
-                      // src={diploma.image}
-                      src={`/api/image?url=${encodeURIComponent(diploma.image)}`}
-                      alt={diploma.title}
-                      className="w-full h-full object-cover object-center"
-                    />
-                  </div>
-
-                  {/* Title and description */}
-                  <div className="absolute w-full max-h-full z-10 inset-0 p-4 text-white flex group">
-                    <div className="bg-blue-600/75 backdrop-blur-md p-2.5 max-h-fit w-full mt-auto">
-                      <h3 className="text-xl font-semibold">{diploma.title}</h3>
-                      <p className="text-sm line-clamp-1 group-hover:line-clamp-none opacity-80">
-                        {diploma.description}
-                      </p>
-                    </div>
-                  </div>
-                </Link>
-              ))}
-          </div>
-        )}
+        <div className="grid grid-cols-3 gap-2.5 py-6">
+          {allDiplomas.map((diploma) => (
+            // Card
+            <DiplomaItem key={diploma.id} diploma={diploma} />
+          ))}
+        </div>
       </InfiniteScroll>
 
-      {/* State info footer */}
-      <footer className="flex flex-col items-center justify-center mt-8">
-        <p className="text-gray-600">{handleState()}</p>
-        {!isLoading && !isFetchingNextPage && hasNextPage ? (
-          <ChevronDown size={18} className="text-gray-400" />
-        ) : (
-          ""
-        )}
-      </footer>
+      {/* Status message footer */}
+      <ListStatus
+        isLoading={isLoading}
+        isFetchingNextPage={isFetchingNextPage}
+        hasNextPage={hasNextPage}
+        resourceName="diplomas"
+      />
     </>
   );
 }

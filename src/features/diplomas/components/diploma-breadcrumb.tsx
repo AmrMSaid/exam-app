@@ -7,7 +7,7 @@ import {
   BreadcrumbList,
 } from "@/shared/components/ui/breadcrumb";
 
-export function DiplomasBreadcrumb() {
+export function DiplomaBreadcrumb() {
   return (
     <nav className="bg-white p-4">
       <Breadcrumb>

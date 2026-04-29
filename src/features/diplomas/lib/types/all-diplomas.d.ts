@@ -1,22 +1,22 @@
-export interface DiplomasResponse {
+import { IDocumentFields } from "@/shared/lib/types/api";
+
+export interface IDiplomasResponse {
   status: boolean;
   code: number;
   payload: Payload;
 }
 
 export interface Payload {
-  data: Diploma[];
+  data: IDiploma[];
   metadata: Metadata;
 }
 
-export interface Diploma {
+export interface IDiploma extends IDocumentFields {
   id: string;
   title: string;
   description: string;
-  image: string;
+  image: string | null;
   immutable: boolean;
-  createdAt: string;
-  updatedAt: string;
 }
 
 export interface Metadata {

@@ -1,15 +1,15 @@
-export interface ExamsResponse {
+export interface IExamsResponse {
   status: boolean;
   code: number;
   payload: Payload;
 }
 
 export interface Payload {
-  data: Exam[];
+  data: IExam[];
   metadata: Metadata;
 }
 
-export interface Exam {
+export interface IExam {
   id: string;
   title: string;
   description: string;
@@ -19,12 +19,13 @@ export interface Exam {
   immutable: boolean;
   createdAt: string;
   updatedAt: string;
-  diploma: Diploma;
-  _count: Count;
+  diploma: IDiploma;
+  questionsCount: number;
 }
 
-export interface Count {
-  questions: number;
+export interface IDiploma {
+  id: string;
+  title: string;
 }
 
 export interface Metadata {

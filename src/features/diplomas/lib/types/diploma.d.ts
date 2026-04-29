@@ -1,14 +1,14 @@
-export interface DiplomaByIdResponse {
+export interface IDiplomaByIdResponse {
   status: boolean;
   code: number;
   payload: Payload;
 }
 
 export interface Payload {
-  diploma: DiplomaById;
+  diploma: IDiplomaById;
 }
 
-export interface DiplomaById {
+export interface IDiplomaById {
   id: string;
   title: string;
   description: string;
@@ -16,14 +16,15 @@ export interface DiplomaById {
   immutable: boolean;
   createdAt: string;
   updatedAt: string;
-  exams: Exam[];
+  exams: IDiplomaExam[];
 }
 
-export interface DiplomaExam {
+export interface IDiplomaExam {
   id: string;
   title: string;
   description: string;
   image: string;
   duration: number;
   createdAt: string;
+  questionsCount: number;
 }

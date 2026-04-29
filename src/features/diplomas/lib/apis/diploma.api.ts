@@ -1,11 +1,11 @@
 "use server";
 
 import { getNextAuthToken } from "@/features/auth/lib/utils/auth.util";
-import { DiplomaByIdResponse } from "../types/diploma";
+import { IDiplomaByIdResponse } from "../types/diploma";
 
 export const getDiplomaById = async (id: string) => {
   const jwt = await getNextAuthToken();
-  const token = jwt?.token;
+  const token = jwt?.accessToken;
 
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/diplomas/${id}`,
@@ -15,7 +15,7 @@ export const getDiplomaById = async (id: string) => {
       },
     },
   );
-  const data: DiplomaByIdResponse = await response.json();
+  const data: IDiplomaByIdResponse = await response.json();
 
   return data;
 };
