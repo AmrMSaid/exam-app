@@ -1,80 +1,78 @@
+"use client";
+
 import { OtpInput } from "./otp-input";
 import AuthHeading from "../auth-heading";
+import RegisterProgress from "./register-progress";
+import ErrorFeedback from "../error-feedback";
+import { FormButton } from "../form-button";
 
-export default function VerifyEmail() {
+interface VerifyEmailProps {
+  email: string;
+  otp: string;
+  error?: string | null;
+  otpError: string | null;
+  isPending?: boolean;
+  onOtpChange: (value: string) => void;
+  onEditEmail: () => void;
+  onVerify: () => void;
+}
+
+export default function VerifyEmail({
+  email,
+  otp,
+  error,
+  otpError,
+  isPending,
+  onOtpChange,
+  onEditEmail,
+  onVerify,
+}: VerifyEmailProps) {
   return (
     <div className="w-full max-w-lg">
-      {/* Progress */}
-      <div className="flex items-center w-full max-w-xl px-5 mb-6">
-        {/* Step 1 (completed) */}
-        <div className="flex items-center">
-          <div className="w-2.5 h-2.5 bg-blue-600 -rotate-45"></div>
-        </div>
-
-        {/* Line */}
-        <div className="flex-1 outline-1 outline-blue-600 mx-2"></div>
-
-        {/* Step 2 (active) */}
-        <div className="flex items-center">
-          <div className="relative">
-            <div className="absolute w-2.5 h-2.5 bg-blue-600 -rotate-45 z-10 -translate-y-1/2"></div>
-            <div className="absolute inset-0 w-5.5 h-5.5 bg-blue-100 -rotate-45 -translate-x-1/4 -translate-y-1/2"></div>
-          </div>
-        </div>
-
-        {/* Line (dashed upcoming) */}
-        <div className="flex-1 h-0.5 border-t-2 border-dashed border-blue-600 mx-2"></div>
-
-        {/* Step 3 (upcoming) */}
-        <div className="flex items-center">
-          <div className="w-2.5 h-2.5 outline-1 outline-blue-600 bg-blue-50 -rotate-45"></div>
-        </div>
-
-        {/* Line (dashed upcoming) */}
-        <div className="flex-1 h-0.5 border-t-2 border-dashed border-blue-600 mx-2"></div>
-
-        {/* Step 4 (upcoming) */}
-        <div className="flex items-center">
-          <div className="w-2.5 h-2.5 outline-1 outline-blue-600 bg-blue-50 -rotate-45"></div>
-        </div>
-      </div>
+      {/* Progress figure */}
+      <RegisterProgress currentStep={2} />
 
       {/* Heading */}
       <AuthHeading text={"Create Account"} />
 
+      {/* Body */}
       <div className="ps-4">
-        {/* Subheader */}
         <h3 className="font-inter text-blue-600 font-bold text-2xl mb-2">
           Verify OTP
         </h3>
 
-        {/* Text */}
         <span className="text-gray-500">
           Please enter the 6-digits code we have sent to:{" "}
         </span>
-        <span className="text-gray-800">
-          user@example.com.{" "}
-          <span className="text-blue-600 font-medium underline cursor-pointer hover:text-blue-700">
-            Edit
-          </span>
-        </span>
+        <span className="text-gray-800">{email}.</span>
+        <button
+          type="button"
+          onClick={onEditEmail}
+          className="ms-2 font-medium text-blue-600 hover:text-blue-700 underline cursor-pointer"
+        >
+          Edit
+        </button>
 
-        {/* OTP */}
+        {/* OTP input */}
         <div className="flex flex-col items-center gap-6 mt-6">
-          <OtpInput />
+          <OtpInput value={otp} onChange={onOtpChange} />
           <p className="text-sm font-medium text-gray-500">
             You can request another code in: 60s
           </p>
         </div>
 
+        {/* Error feedback */}
+        {error && <ErrorFeedback error={error} />}
+        {otpError && <ErrorFeedback error={otpError} />}
+
         {/* Button */}
-        <button
-          type="submit"
-          form="login-form"
-          className="w-full bg-blue-50 outline-1 outline-blue-600 text-gray-800 font-medium py-3.5 text-sm mt-6 cursor-pointer hover:bg-blue-100"
-        >
-          Verify Code
-        </button>
+        <FormButton
+          label="Verify Code"
+          loadingLabel="Verifying..."
+          isPending={isPending}
+          variant="secondary"
+          onClick={onVerify}
+        />
       </div>
     </div>
   );

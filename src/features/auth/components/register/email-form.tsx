@@ -1,62 +1,70 @@
 "use client";
 
-import Link from "next/link";
+import { ChevronRight } from "lucide-react";
+import { FormProvider, UseFormReturn } from "react-hook-form";
 import { Card, CardContent } from "@/shared/components/ui/card";
 import AuthHeading from "../auth-heading";
-import { ChevronRight } from "lucide-react";
-import EmailInput from "../email-input";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { registerSchema } from "../../lib/schemas/register-schema";
-import { RegisterValues } from "../../lib/types/forms";
+import ErrorFeedback from "../error-feedback";
+import { FormInput } from "../form-input";
+import { IRegisterFields } from "../../lib/types/auth";
+import AuthFooter from "../auth-footer";
+import { FormButton } from "../form-button";
 
-export default function EmailForm() {
-  const form = useForm<RegisterValues>({
-    resolver: zodResolver(registerSchema),
-    defaultValues: {
-      email: "",
-    },
-  });
+interface EmailFormProps {
+  form: UseFormReturn<IRegisterFields>;
+  error?: string | null;
+  isPending?: boolean;
+  onNext: () => Promise<void>;
+}
 
-  function onSubmit(data: RegisterValues) {}
-
+export default function EmailForm({
+  form,
+  error,
+  isPending,
+  onNext,
+}: EmailFormProps) {
   return (
-    <Card className="w-full max-w-md">
-      {/* Heading */}
-      <AuthHeading text={"Create Account"} />
+    <Card className="w-full max-w-md gap-0">
+      <FormProvider {...form}>
+        {/* Heading */}
+        <AuthHeading text={"Create Account"} />
 
-      {/* Form */}
-      <CardContent className="relative">
-        <form
-          className="space-y-5"
-          id="login-form"
-          onSubmit={form.handleSubmit(onSubmit)}
-        >
-          {/* Email */}
-          <EmailInput control={form.control} />
-        </form>
-      </CardContent>
+        {/* Form */}
+        <CardContent className="relative">
+          <form
+            className="space-y-2"
+            onSubmit={(event) => {
+              event.preventDefault();
+              void onNext();
+            }}
+          >
+            {/* Email */}
+            <FormInput
+              name="email"
+              label="Email"
+              placeholder="user@example.com"
+              type="email"
+              autoComplete="email"
+            />
 
-      {/* Button */}
-      <button
-        type="submit"
-        form="login-form"
-        className="flex gap-2.5 items-center justify-center bg-blue-50 outline-1 outline-blue-600 text-gray-800 font-medium py-3.5 text-sm mt-6 mx-4 cursor-pointer hover:bg-blue-100"
-      >
-        Next
-        <ChevronRight size={16} />
-      </button>
+            {/* Error feedback */}
+            {error && <ErrorFeedback error={error} />}
 
-      {/* Footer */}
-      <div className="font-medium mt-3 text-gray-500 text-sm flex gap-2 justify-center">
-        Already have an account?
-        <Link
-          className="text-blue-600 hover:text-blue-700 hover:underline"
-          href={"/login"}
-        >
-          Login
-        </Link>
-      </div>
+            {/* Button */}
+            <FormButton
+              type="submit"
+              label="Next"
+              icon={ChevronRight}
+              loadingLabel="Sending OTP..."
+              isPending={isPending}
+              variant="secondary"
+            />
+          </form>
+        </CardContent>
+
+        {/* Footer */}
+        <AuthFooter mode="register" className="mt-9" />
+      </FormProvider>
     </Card>
   );
 }

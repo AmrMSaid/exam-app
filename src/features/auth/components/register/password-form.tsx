@@ -1,90 +1,82 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
-import { Button } from "@/shared/components/ui/button";
-import { Card, CardContent, CardFooter } from "@/shared/components/ui/card";
-import { registerSchema } from "../../lib/schemas/register-schema";
+import { FormEventHandler } from "react";
+import { FormProvider, UseFormReturn } from "react-hook-form";
+import { Card, CardContent } from "@/shared/components/ui/card";
 import AuthHeading from "../auth-heading";
-import PasswordInputs from "../password-inputs";
+import RegisterProgress from "./register-progress";
+import ErrorFeedback from "../error-feedback";
+import { FormInput } from "../form-input";
+import { IRegisterFields } from "../../lib/types/auth";
+import { FormButton } from "../form-button";
 
-type RegisterValues = z.infer<typeof registerSchema>;
+interface PasswordFormProps {
+  form: UseFormReturn<IRegisterFields>;
+  error?: string | null;
+  isPending?: boolean;
+  onSubmit: FormEventHandler<HTMLFormElement>;
+}
 
-export default function PasswordForm() {
-  const form = useForm<RegisterValues>({
-    resolver: zodResolver(registerSchema),
-    defaultValues: {
-      password: "",
-      confirmPassword: "",
-    },
-  });
-
-  function onSubmit(data: RegisterValues) {}
-
+export default function PasswordForm({
+  form,
+  error,
+  isPending,
+  onSubmit,
+}: PasswordFormProps) {
   return (
     <Card className="w-full max-w-md gap-0">
-      {/* Progress */}
-      <div className="flex items-center w-full max-w-xl px-5 mb-6">
-        {/* Step 1 (completed) */}
-        <div className="flex items-center">
-          <div className="w-2.5 h-2.5 bg-blue-600 -rotate-45"></div>
-        </div>
-        {/* Line */}
-        <div className="flex-1 outline-1 outline-blue-600 mx-2"></div>
+      <FormProvider {...form}>
+        {/* Progress figure */}
+        <RegisterProgress currentStep={4} />
 
-        {/* Step 2 (completed) */}
-        <div className="flex items-center">
-          <div className="w-2.5 h-2.5 bg-blue-600 -rotate-45"></div>
-        </div>
-        {/* Line */}
-        <div className="flex-1 outline-1 outline-blue-600 mx-2"></div>
+        {/* Heading */}
+        <AuthHeading text={"Create Account"} />
 
-        {/* Step 3 (completed) */}
-        <div className="flex items-center">
-          <div className="w-2.5 h-2.5 bg-blue-600 -rotate-45"></div>
-        </div>
-        {/* Line */}
-        <div className="flex-1 outline-1 outline-blue-600 mx-2"></div>
+        <h3 className="font-inter text-blue-600 font-bold text-2xl mb-8 ms-4">
+          Create a strong password
+        </h3>
 
-        {/* Step 4 (active) */}
-        <div className="flex items-center">
-          <div className="relative">
-            <div className="absolute w-2.5 h-2.5 bg-blue-600 -rotate-45 z-10 -translate-y-1/2"></div>
-            <div className="absolute inset-0 w-5.5 h-5.5 bg-blue-100 -rotate-45 -translate-x-1/4 -translate-y-1/2"></div>
-          </div>
-        </div>
-      </div>
-
-      {/* Heading */}
-      <AuthHeading text={"Create Account"} />
-
-      {/* Subheader */}
-      <h3 className="font-inter text-blue-600 font-bold text-2xl mb-8 ms-4">
-        Create a strong password
-      </h3>
-
-      <CardContent className="relative">
         {/* Form */}
-        <form
-          className="space-y-5"
-          id="login-form"
-          onSubmit={form.handleSubmit(onSubmit)}
-        >
-          <PasswordInputs control={form.control} />
-        </form>
-      </CardContent>
+        <CardContent className="relative">
+          <form
+            className="space-y-5"
+            id="register-password-form"
+            onSubmit={onSubmit}
+          >
+            {/* Password */}
+            <FormInput
+              name="password"
+              label="Password"
+              placeholder="********"
+              type="password"
+              autoComplete="new-password"
+              required
+            />
 
-      {/* Button */}
-      <CardFooter className="flex-col items-stretch gap-3">
-        <Button
-          type="submit"
-          form="login-form"
-          className="w-full bg-blue-600 py-6 text-sm mt-6 cursor-pointer hover:bg-blue-700"
-        >
-          Create Account
-        </Button>
-      </CardFooter>
+            {/* Confirm password */}
+            <FormInput
+              name="confirmPassword"
+              label="Confirm Password"
+              placeholder="********"
+              type="password"
+              autoComplete="new-password"
+              required
+            />
+
+            {/* Error feedback */}
+            {error && <ErrorFeedback error={error} />}
+
+            {/* Button */}
+            <FormButton
+              type="submit"
+              label="Create Account"
+              loadingLabel="Creating Account..."
+              isPending={isPending}
+              className="mt-5"
+            />
+          </form>
+        </CardContent>
+      </FormProvider>
     </Card>
   );
 }

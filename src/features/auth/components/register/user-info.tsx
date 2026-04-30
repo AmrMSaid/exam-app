@@ -1,110 +1,113 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Controller, useForm } from "react-hook-form";
-import * as z from "zod";
-import { Card, CardContent, CardFooter } from "@/shared/components/ui/card";
+import { ChevronRight } from "lucide-react";
+import { Controller, FormProvider, UseFormReturn } from "react-hook-form";
+import { Card, CardContent } from "@/shared/components/ui/card";
 import {
   Field,
   FieldError,
   FieldGroup,
   FieldLabel,
 } from "@/shared/components/ui/field";
-import { Input } from "@/shared/components/ui/input";
 import { PhoneInput } from "./phone-input";
-import { useState } from "react";
-import { registerSchema } from "../../lib/schemas/register-schema";
 import AuthHeading from "../auth-heading";
-import { ChevronRight } from "lucide-react";
+import RegisterProgress from "./register-progress";
+import ErrorFeedback from "../error-feedback";
+import { FormInput } from "../form-input";
+import { IRegisterFields } from "../../lib/types/auth";
+import { FormButton } from "../form-button";
 
-type RegisterValues = z.infer<typeof registerSchema>;
+interface UserInfoProps {
+  form: UseFormReturn<IRegisterFields>;
+  error?: string | null;
+  isPending?: boolean;
+  onNext: () => Promise<void>;
+}
 
-export default function UserInfo() {
-  const [phone, setPhone] = useState<string>();
-
-  const form = useForm<RegisterValues>({
-    resolver: zodResolver(registerSchema),
-    defaultValues: {
-      firstname: "",
-      lastname: "",
-      username: "",
-      phone: "",
-    },
-  });
-
-  function onSubmit(data: RegisterValues) {}
-
+export default function UserInfo({
+  form,
+  error,
+  isPending,
+  onNext,
+}: UserInfoProps) {
   return (
     <Card className="w-full max-w-md gap-0">
-      {/* Progress */}
-      <div className="flex items-center w-full max-w-xl px-5 mb-6">
-        {/* Step 1 (completed) */}
-        <div className="flex items-center">
-          <div className="w-2.5 h-2.5 bg-blue-600 -rotate-45"></div>
-        </div>
-        {/* Line */}
-        <div className="flex-1 outline-1 outline-blue-600 mx-2"></div>
+      <FormProvider {...form}>
+        {/* Progress figure */}
+        <RegisterProgress currentStep={3} />
 
-        {/* Step 2 (completed) */}
-        <div className="flex items-center">
-          <div className="w-2.5 h-2.5 bg-blue-600 -rotate-45"></div>
-        </div>
-        {/* Line */}
-        <div className="flex-1 outline-1 outline-blue-600 mx-2"></div>
+        {/* Heading */}
+        <AuthHeading text={"Create Account"} />
 
-        {/* Step 3 (completed) */}
-        <div className="flex items-center">
-          <div className="relative">
-            <div className="absolute w-2.5 h-2.5 bg-blue-600 -rotate-45 z-10 -translate-y-1/2"></div>
-            <div className="absolute inset-0 w-5.5 h-5.5 bg-blue-100 -rotate-45 -translate-x-1/4 -translate-y-1/2"></div>
-          </div>
-        </div>
+        <h3 className="font-inter text-blue-600 font-bold text-2xl mb-8 ms-4">
+          Tell us more about you
+        </h3>
 
-        {/* Line (dashed upcoming) */}
-        <div className="flex-1 h-0.5 border-t-2 border-dashed border-blue-600 mx-2"></div>
-
-        {/* Step 4 (upcoming) */}
-        <div className="flex items-center">
-          <div className="w-2.5 h-2.5 outline-1 outline-blue-600 bg-blue-50 -rotate-45"></div>
-        </div>
-      </div>
-
-      {/* Heading */}
-      <AuthHeading text={"Create Account"} />
-
-      {/* Subheader */}
-      <h3 className="font-inter text-blue-600 font-bold text-2xl mb-8 ms-4">
-        Tell us more about you
-      </h3>
-
-      <CardContent className="relative">
         {/* Form */}
-        <form
-          className="space-y-5"
-          id="login-form"
-          onSubmit={form.handleSubmit(onSubmit)}
-        >
-          <FieldGroup>
-            <div className="flex gap-2.5">
-              {/* First name */}
+        <CardContent className="relative">
+          <form
+            className="space-y-5"
+            id="register-user-info-form"
+            onSubmit={(event) => {
+              event.preventDefault();
+              void onNext();
+            }}
+          >
+            <FieldGroup>
+              <div className="flex gap-2.5">
+                {/* First name */}
+                <FormInput
+                  name="firstName"
+                  label="First name"
+                  placeholder="Ahmed"
+                  type="text"
+                  autoComplete="given-name"
+                  required
+                />
+
+                {/* Last name */}
+                <FormInput
+                  name="lastName"
+                  label="Last name"
+                  placeholder="Abdullah"
+                  type="text"
+                  autoComplete="family-name"
+                  required
+                />
+              </div>
+
+              {/* Username */}
+              <FormInput
+                name="username"
+                label="Username"
+                placeholder="user123"
+                type="text"
+                autoComplete="username"
+                required
+              />
+
+              {/* Phone */}
               <Controller
-                name="firstname"
+                name="phone"
                 control={form.control}
                 render={({ field, fieldState }) => (
                   <Field data-invalid={fieldState.invalid}>
                     <FieldLabel
-                      className="font-medium text-gray-800 gap-0 text-base"
-                      htmlFor="firstname"
+                      className="font-medium text-gray-800 text-base"
+                      htmlFor="phone"
                     >
-                      First name<span className="text-red-600">*</span>
+                      Phone
                     </FieldLabel>
-                    <Input
-                      {...field}
-                      id="firstname"
-                      type="text"
+                    <PhoneInput
+                      id="phone"
+                      type="tel"
                       aria-invalid={fieldState.invalid}
-                      placeholder="Ahmed"
-                      className="h-11"
+                      defaultCountry="EG"
+                      value={field.value}
+                      onChange={(value) => field.onChange(value ?? "")}
+                      countries={["EG"]}
+                      international={true}
+                      autoComplete="tel"
                     />
                     {fieldState.invalid && (
                       <FieldError errors={[fieldState.error]} />
@@ -112,106 +115,23 @@ export default function UserInfo() {
                   </Field>
                 )}
               />
+            </FieldGroup>
 
-              {/* Last name */}
-              <Controller
-                name="lastname"
-                control={form.control}
-                render={({ field, fieldState }) => (
-                  <Field data-invalid={fieldState.invalid}>
-                    <FieldLabel
-                      className="font-medium text-gray-800 gap-0 text-base"
-                      htmlFor="lastname"
-                    >
-                      Last name<span className="text-red-600">*</span>
-                    </FieldLabel>
-                    <Input
-                      {...field}
-                      id="lastname"
-                      type="text"
-                      aria-invalid={fieldState.invalid}
-                      placeholder="Abdullah"
-                      className="h-11"
-                    />
-                    {fieldState.invalid && (
-                      <FieldError errors={[fieldState.error]} />
-                    )}
-                  </Field>
-                )}
-              />
-            </div>
+            {/* Error feedback */}
+            {error && <ErrorFeedback error={error} />}
 
-            {/* Username */}
-            <Controller
-              name="username"
-              control={form.control}
-              render={({ field, fieldState }) => (
-                <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel
-                    className="font-medium text-gray-800 gap-0 text-base"
-                    htmlFor="username"
-                  >
-                    Username<span className="text-red-600">*</span>
-                  </FieldLabel>
-                  <Input
-                    {...field}
-                    id="username"
-                    type="text"
-                    aria-invalid={fieldState.invalid}
-                    placeholder="user123"
-                    className="h-11"
-                  />
-                  {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
-                  )}
-                </Field>
-              )}
+            {/* Button */}
+            <FormButton
+              type="submit"
+              label="Next"
+              icon={ChevronRight}
+              loadingLabel="Checking..."
+              isPending={isPending}
+              variant="secondary"
             />
-
-            {/* Phone */}
-            <Controller
-              name="phone"
-              control={form.control}
-              render={({ field, fieldState }) => (
-                <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel
-                    className="font-medium text-gray-800 text-base"
-                    htmlFor="phone"
-                  >
-                    Phone
-                  </FieldLabel>
-                  <PhoneInput
-                    {...field}
-                    id="phone"
-                    type="tel"
-                    aria-invalid={fieldState.invalid}
-                    defaultCountry="EG"
-                    value={phone}
-                    onChange={setPhone}
-                    countries={["EG"]}
-                    international={true}
-                  />
-                  {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
-                  )}
-                </Field>
-              )}
-            />
-          </FieldGroup>
-        </form>
-      </CardContent>
-
-      {/* Button */}
-      <CardFooter className="flex-col items-stretch gap-3">
-        <button
-          type="submit"
-          form="login-form"
-          className="flex gap-2.5 items-center justify-center w-full bg-blue-50 outline-1 outline-blue-600 text-gray-800 font-medium py-3.5 text-sm mt-6 cursor-pointer hover:bg-blue-100"
-        >
-          Next
-          <ChevronRight size={16} />
-        </button>
-      </CardFooter>
+          </form>
+        </CardContent>
+      </FormProvider>
     </Card>
   );
 }
