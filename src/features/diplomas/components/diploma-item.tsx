@@ -1,7 +1,7 @@
 import { slugify } from "@/shared/lib/utils/slugify";
 import Image from "next/image";
 import Link from "next/link";
-import { IDiploma } from "../lib/types/all-diplomas";
+import { IDiploma } from "../lib/types/diploma";
 
 interface DiplomaItemProps {
   diploma: IDiploma;

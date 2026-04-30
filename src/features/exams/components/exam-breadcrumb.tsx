@@ -9,12 +9,12 @@ import {
 } from "@/shared/components/ui/breadcrumb";
 import { slugify } from "@/shared/lib/utils/slugify";
 
-interface AllExamsBreadcrumbParams {
+interface ExamBreadcrumbParams {
   title: string;
   id: string;
 }
 
-export function AllExamsBreadcrumb({ title, id }: AllExamsBreadcrumbParams) {
+export function ExamBreadcrumb({ title, id }: ExamBreadcrumbParams) {
   return (
     <nav className="bg-white p-4">
       <Breadcrumb>

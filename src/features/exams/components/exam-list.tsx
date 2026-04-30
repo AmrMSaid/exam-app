@@ -2,13 +2,8 @@
 
 import { useInfiniteQuery } from "@tanstack/react-query";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { CircleQuestionMark, MoveRight, Timer } from "lucide-react";
-import { getExams } from "../lib/apis/exams.api";
-import { Button } from "@/shared/components/ui/button";
-import { ExamsListSkeleton } from "../skeletons/exams-list.skeleton";
-import Link from "next/link";
-import { slugify } from "@/shared/lib/utils/slugify";
-import Image from "next/image";
+import { getExams } from "../lib/apis/exam.api";
+import { ExamSkeleton } from "../skeletons/exam.skeleton";
 import { useMemo } from "react";
 import ListStatus from "@/shared/components/list-status";
 import ExamItem from "./exam-item";
@@ -60,7 +55,7 @@ export default function ExamList({ id }: ExamListParams) {
         loader={null}
       >
         {/* Loading skeleton */}
-        {isLoading ? <ExamsListSkeleton /> : ""}
+        {isLoading ? <ExamSkeleton /> : ""}
 
         {/* Exams list */}
         <article className="bg-white p-6 mt-6 flex flex-col gap-4">

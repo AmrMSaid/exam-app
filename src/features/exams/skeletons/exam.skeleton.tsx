@@ -1,6 +1,6 @@
 import { Skeleton } from "@/shared/components/ui/skeleton";
 
-export function ExamsListSkeleton() {
+export function ExamSkeleton() {
   return (
     <div className="bg-white p-4 mt-6 flex flex-col gap-2 items-center">
       {Array.from({ length: 3 }).map((_, i) => (

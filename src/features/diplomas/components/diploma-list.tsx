@@ -1,7 +1,7 @@
 "use client";
 
 import InfiniteScroll from "react-infinite-scroll-component";
-import { DiplomasListSkeleton } from "../skeletons/diplomas-list.skeleton";
+import { DiplomaSkeleton } from "../skeletons/diploma.skeleton";
 import { useDiplomaList } from "../hooks/use-diploma-list";
 import { useMemo } from "react";
 import DiplomaItem from "./diploma-item";
@@ -12,7 +12,6 @@ export default function DiplomaList() {
   const {
     data: diplomaPages,
     isLoading,
-    isError,
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
@@ -40,7 +39,7 @@ export default function DiplomaList() {
         loader={null}
       >
         {/* Loading skeleton */}
-        {isLoading ? <DiplomasListSkeleton /> : ""}
+        {isLoading ? <DiplomaSkeleton /> : ""}
 
         {/* Diplomas list */}
         <div className="grid grid-cols-3 gap-2.5 py-6">

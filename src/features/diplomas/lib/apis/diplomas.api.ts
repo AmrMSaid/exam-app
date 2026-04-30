@@ -6,7 +6,7 @@ import {
 import { IApiResponse, IPaginatedResponse } from "@/shared/lib/types/api";
 import { getToken } from "next-auth/jwt";
 import { NextRequest } from "next/server";
-import { IDiploma } from "../types/all-diplomas";
+import { IDiploma } from "../types/diploma";
 
 export async function getDiplomas(req: NextRequest) {
   const token = await getToken({ req });

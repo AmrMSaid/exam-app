@@ -1,4 +1,4 @@
-import { IExamsResponse } from "../types/exams";
+import { IExamsResponse } from "../types/exam";
 
 export const getExams = async (id: string, page: number) => {
   const response = await fetch(

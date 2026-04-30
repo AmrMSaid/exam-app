@@ -2,10 +2,10 @@
 
 import { IApiResponse, IPaginatedResponse } from "@/shared/lib/types/api";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { IDiploma } from "../lib/types/all-diplomas";
 import { useSearchParams } from "next/navigation";
 import { PAGINATION_LIMIT } from "@/shared/lib/constants/api.constants";
 import { DIPLOMA_KEYS } from "../lib/apis/diploma.options";
+import { IDiploma } from "../lib/types/diploma";
 
 export function useDiplomaList() {
   // Navigation
