@@ -1,5 +1,5 @@
 import { GraduationCap } from "lucide-react";
-import DiplomaList from "../../features/diplomas/components/diplomas-list";
+import DiplomaList from "../../features/diplomas/components/diploma-list";
 import { DiplomaBreadcrumb } from "@/features/diplomas/components/diploma-breadcrumb";
 
 // Homepage (diplomas page)

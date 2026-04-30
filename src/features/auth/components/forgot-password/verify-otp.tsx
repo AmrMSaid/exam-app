@@ -1,6 +1,6 @@
 import { MoveLeft } from "lucide-react";
 import AuthHeading from "../auth-heading";
-import LoginFooter from "../login-footer";
+import AuthFooter from "../auth-footer";
 
 export default function VerifyOtp() {
   return (
@@ -29,7 +29,7 @@ export default function VerifyOtp() {
         </div>
 
         {/* Footer */}
-        <LoginFooter />
+        <AuthFooter mode="register" className="mt-4" />
       </div>
     </div>
   );

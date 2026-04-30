@@ -4,9 +4,19 @@ import {
   InputOTPSlot,
 } from "@/shared/components/ui/input-otp";
 
-export function OtpInput() {
+interface OtpInputProps {
+  value: string;
+  onChange: (value: string) => void;
+}
+
+export function OtpInput({ value, onChange }: OtpInputProps) {
   return (
-    <InputOTP maxLength={6}>
+    <InputOTP
+      maxLength={6}
+      value={value}
+      onChange={onChange}
+      autoComplete="one-time-code"
+    >
       <InputOTPGroup>
         <InputOTPSlot index={0} />
         <InputOTPSlot index={1} />

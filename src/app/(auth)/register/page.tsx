@@ -1,15 +1,5 @@
-import EmailForm from "@/features/auth/components/register/email-form";
-import VerifyEmail from "@/features/auth/components/register/verify-email";
-import UserInfo from "@/features/auth/components/register/user-info";
-import PasswordForm from "@/features/auth/components/register/password-form";
+import RegisterFlow from "@/features/auth/components/register/register-flow";
 
 export default function RegisterPage() {
-  return (
-    <main className="flex items-center justify-center">
-      <EmailForm />
-      {/* <VerifyEmail /> */}
-      {/* <UserInfo/> */}
-      {/* <PasswordForm /> */}
-    </main>
-  );
+  return <RegisterFlow />;
 }

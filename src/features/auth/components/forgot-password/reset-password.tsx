@@ -1,60 +1,73 @@
 "use client";
 
-import { Card, CardContent, CardFooter } from "@/shared/components/ui/card";
+import { Card, CardContent } from "@/shared/components/ui/card";
 import AuthHeading from "../auth-heading";
-import { ChevronRight } from "lucide-react";
-import { useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { registerSchema } from "../../lib/schemas/register-schema";
-import LoginFooter from "../login-footer";
-import PasswordInputs from "../password-inputs";
-import { RegisterValues } from "../../lib/types/forms";
+import AuthFooter from "../auth-footer";
+import { IResetPasswordFields } from "../../lib/types/auth";
+import { resetPasswordFormSchema } from "../../lib/schemas/auth.schema";
+import { FormInput } from "../form-input";
+import { FormButton } from "../form-button";
 
 export default function ResetPassword() {
-  const form = useForm<RegisterValues>({
-    resolver: zodResolver(registerSchema),
+  const form = useForm<IResetPasswordFields>({
+    resolver: zodResolver(resetPasswordFormSchema),
     defaultValues: {
-      password: "",
+      newPassword: "",
       confirmPassword: "",
     },
   });
 
-  function onSubmit(data: RegisterValues) {}
+  function onSubmit(data: IResetPasswordFields) {
+    void data;
+  }
 
   return (
-    <Card className="w-full max-w-lg gap-0 px-6">
-      {/* Heading */}
-      <AuthHeading text={"Forgot Password"} />
+    <Card className="w-full max-w-lg px-6">
+      <FormProvider {...form}>
+        {/* Heading */}
+        <AuthHeading text="Forgot Password" className="mb-0" />
 
-      <p className="text-gray-500 ms-4 text-base mb-8">
-        Create a new strong password for your account.
-      </p>
+        <p className="text-gray-500 ms-4 text-base mb-6">
+          Create a new strong password for your account.
+        </p>
 
-      {/* Form */}
-      <CardContent className="relative">
-        <form
-          className="space-y-5"
-          id="login-form"
-          onSubmit={form.handleSubmit(onSubmit)}
-        >
-          <PasswordInputs control={form.control} />
-        </form>
-      </CardContent>
+        {/* Form */}
+        <CardContent className="relative">
+          <form
+            className="space-y-5"
+            id="reset-password-form"
+            onSubmit={form.handleSubmit(onSubmit)}
+          >
+            {/* Password */}
+            <FormInput
+              name="newPassword"
+              label="Password"
+              placeholder="********"
+              type="password"
+              autoComplete="new-password"
+              required
+            />
 
-      <CardFooter className="flex-col items-stretch gap-3">
-        {/* Button */}
-        <button
-          type="submit"
-          form="login-form"
-          className="flex gap-2.5 items-center justify-center w-full bg-blue-600 text-white font-medium py-3.5 text-sm mt-6 cursor-pointer hover:bg-blue-700"
-        >
-          Reset Password
-          <ChevronRight size={16} />
-        </button>
+            {/* Confirm password */}
+            <FormInput
+              name="confirmPassword"
+              label="Confirm Password"
+              placeholder="********"
+              type="password"
+              autoComplete="new-password"
+              required
+            />
+
+            {/* Button */}
+            <FormButton label="Reset Password" className="mt-5" />
+          </form>
+        </CardContent>
 
         {/* Footer */}
-        <LoginFooter />
-      </CardFooter>
+        <AuthFooter mode="register" className="mt-5" />
+      </FormProvider>
     </Card>
   );
 }

@@ -1,5 +1,5 @@
 import { getNextAuthToken } from "@/features/auth/lib/utils/auth.util";
-import { IExamsResponse } from "@/features/exams/lib/types/exams";
+import { IExamsResponse } from "@/features/exams/lib/types/exam";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
