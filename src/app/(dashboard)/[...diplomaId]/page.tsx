@@ -1,4 +1,5 @@
 import { BookOpenCheck } from "lucide-react";
+import { notFound } from "next/navigation";
 import DashboardHeader from "../../../shared/components/dashboard-header";
 import ExamList from "../../../features/exams/components/exam-list";
 import { getDiplomaById } from "../../../features/diplomas/lib/apis/diploma.api";
@@ -15,9 +16,18 @@ export default async function DiplomaExamsPage({
   params,
 }: DiplomaExamsPageProps) {
   const paramsResult = await params;
-  const id = paramsResult.diplomaId[2];
+  const id = paramsResult.diplomaId.at(-1);
 
-  const { payload } = await getDiplomaById(id);
+  if (!id) {
+    notFound();
+  }
+
+  let payload: Awaited<ReturnType<typeof getDiplomaById>>["payload"];
+  try {
+    ({ payload } = await getDiplomaById(id));
+  } catch {
+    notFound();
+  }
 
   return (
     <div className="bg-gray-50">

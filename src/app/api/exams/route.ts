@@ -10,15 +10,24 @@ export async function GET(request: NextRequest) {
   const jwt = await getNextAuthToken();
   const token = jwt?.accessToken;
 
+  if (!process.env.NEXT_PUBLIC_API_URL) {
+    return NextResponse.json(
+      { status: false, code: 500, message: "API base URL is not configured." },
+      { status: 500 },
+    );
+  }
+
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/exams?diplomaId=${id}&page=${page}&limit=3`,
     {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+      headers: token
+        ? {
+            Authorization: `Bearer ${token}`,
+          }
+        : undefined,
     },
   );
   const data: IExamsResponse = await response.json();
 
-  return NextResponse.json(data, { status: 200 });
+  return NextResponse.json(data, { status: response.status });
 }
